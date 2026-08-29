@@ -1,5 +1,6 @@
 import React from 'react'
 import logoImg from '../assets/logo.webp'
+import paytmLogoImg from '../assets/paytm_logo.png'
 
 export function PaytmLogo({ size = 'lg', className = '' }) {
   const isSm = size === 'sm'
@@ -7,41 +8,22 @@ export function PaytmLogo({ size = 'lg', className = '' }) {
   const isLg = size === 'lg'
   const isXl = size === 'xl'
 
-  const fontClass = isSm
-    ? 'text-lg'
+  const heightClass = isSm
+    ? 'h-6'
     : isMd
-    ? 'text-2xl'
+    ? 'h-8'
     : isXl
-    ? 'text-4xl'
-    : 'text-3xl' // default 'lg'
-
-  const badgeClass = isSm
-    ? 'text-[9px] px-1.5 py-0.5'
-    : isMd
-    ? 'text-[11px] px-2 py-0.5'
-    : 'text-xs px-2.5 py-1'
+    ? 'h-14'
+    : 'h-10' // default 'lg'
 
   return (
-    <div className={`flex items-center gap-2 select-none ${className}`}>
-      <div className="flex items-baseline">
-        <span
-          className={`font-black tracking-tight leading-none text-[#002970] ${fontClass}`}
-          style={{ letterSpacing: '-0.04em' }}
-        >
-          pay
-        </span>
-        <span
-          className={`font-black tracking-tight leading-none text-[#00baf2] ${fontClass}`}
-          style={{ letterSpacing: '-0.04em' }}
-        >
-          tm
-        </span>
-        <span
-          className={`ml-2 font-black uppercase text-[#002970] bg-[#e8f5fe] border border-[#bce0fd] rounded-lg leading-none shadow-xs ${badgeClass}`}
-        >
-          money
-        </span>
-      </div>
+    <div className={`flex items-center select-none ${className}`}>
+      <img
+        src={paytmLogoImg}
+        alt="Paytm Money"
+        className={`${heightClass} w-auto object-contain max-w-full drop-shadow-xs`}
+        loading="eager"
+      />
     </div>
   )
 }
