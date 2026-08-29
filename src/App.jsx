@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Sidebar from './components/Sidebar.jsx'
+import { ResqrityLogo } from './components/PaytmLogo.jsx'
 import ExecutiveOverview from './pages/ExecutiveOverview.jsx'
 import AwsSecurity from './pages/AwsSecurity.jsx'
 import AwsAccounts from './pages/AwsAccounts.jsx'
@@ -20,10 +22,37 @@ import Evidence from './pages/Evidence.jsx'
 import SourceReports from './pages/SourceReports.jsx'
 
 export default function App() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   return (
-    <div className="flex min-h-screen bg-[#f5f9fe] text-slate-900 font-sans antialiased">
-      <Sidebar />
-      <main className="flex-1 min-w-0 px-6 py-6 lg:px-10 max-w-7xl">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-[#f5f9fe] text-slate-900 font-sans antialiased overflow-x-hidden">
+      {/* Mobile Top Header (Visible on screens < lg) */}
+      <header className="lg:hidden sticky top-0 z-30 bg-white border-b border-[#e1edf9] px-4 py-3 flex items-center justify-between shadow-xs">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="p-2 rounded-xl text-[#002970] bg-[#f0f7fe] hover:bg-[#e1edf9] border border-[#d0e6fd] transition-colors focus:outline-none"
+            aria-label="Open Navigation Menu"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <ResqrityLogo size="sm" />
+        </div>
+        <span className="text-[10px] font-black uppercase tracking-wider bg-[#e8f7fd] text-[#008db8] px-2.5 py-0.5 rounded-full border border-[#bcecfd]">
+          PROD AUDIT
+        </span>
+      </header>
+
+      {/* Sidebar (Desktop Sticky + Mobile Drawer) */}
+      <Sidebar
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+      />
+
+      {/* Main Content Area (Fully responsive device-fit container) */}
+      <main className="flex-1 min-w-0 w-full px-3.5 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8 max-w-7xl mx-auto overflow-x-hidden">
         <Routes>
           <Route path="/" element={<ExecutiveOverview />} />
           <Route path="/aws" element={<AwsSecurity />} />
