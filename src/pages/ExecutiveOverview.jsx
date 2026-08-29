@@ -111,8 +111,8 @@ export default function ExecutiveOverview() {
       {/* Paytm Hero Feature Banner */}
       <div className="bg-gradient-to-r from-[#eaf5fe] via-[#f1f7fe] to-[#ffffff] border border-[#cbe3fd] rounded-2xl p-6 shadow-paytm flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <div className="flex items-center gap-2 mb-2">
-            <PaytmLogo size="sm" />
+          <div className="flex items-center gap-3 mb-3">
+            <PaytmLogo size="md" />
             <span className="text-[10px] font-extrabold uppercase tracking-wider bg-[#002970] text-white px-2.5 py-0.5 rounded-full">
               Audit Snapshot
             </span>

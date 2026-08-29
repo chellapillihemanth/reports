@@ -53,15 +53,12 @@ const sections = [
 export default function Sidebar() {
   return (
     <aside className="w-64 shrink-0 bg-white border-r border-[#e1edf9] flex flex-col h-screen sticky top-0 z-30 select-none shadow-paytm">
-      {/* Authentic Paytm Brand Header */}
-      <div className="px-5 py-5 border-b border-[#e1edf9] bg-white flex items-center justify-between">
-        <div>
-          <PaytmLogo />
-          <div className="text-slate-400 text-[10px] font-extrabold mt-1 tracking-wider uppercase">
-            Security &amp; Posture
-          </div>
+      {/* Brand Header with RES-Q-RITY Logo */}
+      <div className="px-5 py-4 border-b border-[#e1edf9] bg-white flex items-center justify-between">
+        <div className="flex-1">
+          <PaytmLogo size="md" />
         </div>
-        <span className="text-[10px] font-black uppercase tracking-wider bg-[#e8f5fe] text-[#002970] px-2 py-0.5 rounded-full border border-[#bce0fd]">
+        <span className="text-[10px] font-black uppercase tracking-wider bg-[#e8f7fd] text-[#008db8] px-2 py-0.5 rounded-full border border-[#bcecfd] shrink-0">
           PROD
         </span>
       </div>
@@ -83,7 +80,7 @@ export default function Sidebar() {
                       `block px-3.5 py-2 rounded-xl text-xs font-bold transition-all duration-150 ${
                         isActive
                           ? 'bg-[#002970] text-white shadow-paytm'
-                          : 'text-[#002970] hover:bg-[#f0f7fe] hover:text-[#00baf2]'
+                          : 'text-[#002970] hover:bg-[#f0f9fe] hover:text-[#00baf2]'
                       }`
                     }
                   >
@@ -97,12 +94,12 @@ export default function Sidebar() {
       </nav>
 
       {/* Confidential Footer */}
-      <div className="px-5 py-3.5 border-t border-[#e1edf9] bg-[#f5f9fe] flex items-center justify-between text-[11px] text-slate-500 font-semibold">
+      <div className="px-5 py-3.5 border-t border-[#e1edf9] bg-[#f4fbfe] flex items-center justify-between text-[11px] text-slate-500 font-semibold">
         <span className="flex items-center gap-1.5 text-[10px] font-bold text-[#002970]">
           <span className="w-2 h-2 rounded-full bg-[#00ba88]"></span>
-          <span>Confidential Audit</span>
+          <span>Security Assurance</span>
         </span>
-        <span className="font-mono text-[10px] text-[#002970] font-bold">Apr–Jul 2026</span>
+        <span className="font-mono text-[10px] text-[#008db8] font-bold">Apr–Jul 2026</span>
       </div>
     </aside>
   )
