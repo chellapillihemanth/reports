@@ -2,19 +2,21 @@ import React from 'react'
 import logoImg from '../assets/logo.webp'
 import paytmLogoImg from '../assets/paytm_logo.png'
 
-export function PaytmLogo({ size = 'lg', className = '' }) {
+export function PaytmLogo({ size = 'xl', className = '' }) {
   const isSm = size === 'sm'
   const isMd = size === 'md'
   const isLg = size === 'lg'
   const isXl = size === 'xl'
 
   const heightClass = isSm
-    ? 'h-6'
-    : isMd
     ? 'h-8'
-    : isXl
+    : isMd
+    ? 'h-12'
+    : isLg
     ? 'h-14'
-    : 'h-10' // default 'lg'
+    : isXl
+    ? 'h-16 lg:h-20' // Extra large and high visibility
+    : 'h-16'
 
   return (
     <div className={`flex items-center select-none ${className}`}>
@@ -44,7 +46,7 @@ export function ResqrityLogo({ size = 'md', className = '' }) {
   )
 }
 
-export function Logo({ size = 'lg', className = '' }) {
+export function Logo({ size = 'xl', className = '' }) {
   return <PaytmLogo size={size} className={className} />
 }
 
