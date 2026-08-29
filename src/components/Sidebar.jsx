@@ -60,16 +60,24 @@ const sections = [
 export default function Sidebar({ isOpen = false, onClose = () => {} }) {
   const location = useLocation()
 
-  // Track expanded state for each dropdown section
-  const [openSections, setOpenSections] = useState({
-    security: true,
-    governance: true,
-    compliance: true,
-    remediation: true,
-    audit: true,
+  // Start with all dropdowns collapsed by default (or only expand if active subroute)
+  const [openSections, setOpenSections] = useState(() => {
+    const initial = {
+      security: false,
+      governance: false,
+      compliance: false,
+      remediation: false,
+      audit: false,
+    }
+    sections.forEach((sec) => {
+      if (sec.items.some((item) => item.to === location.pathname)) {
+        initial[sec.id] = true
+      }
+    })
+    return initial
   })
 
-  // Automatically expand the section that contains the active route
+  // Automatically expand the section that contains the active route when location changes
   useEffect(() => {
     sections.forEach((sec) => {
       const hasActiveChild = sec.items.some((item) => item.to === location.pathname)
@@ -84,7 +92,6 @@ export default function Sidebar({ isOpen = false, onClose = () => {} }) {
   }
 
   const handleLinkClick = () => {
-    // Auto-close mobile drawer on link navigation
     onClose()
   }
 
@@ -126,27 +133,27 @@ export default function Sidebar({ isOpen = false, onClose = () => {} }) {
         </div>
 
         {/* Navigation Links with Collapsible Dropdown Sections */}
-        <nav className="flex-1 overflow-y-auto px-3.5 py-4 space-y-3">
+        <nav className="flex-1 overflow-y-auto px-3.5 py-4 space-y-2">
           {/* Standalone Executive Overview Link */}
-          <div className="mb-2">
+          <div className="mb-3">
             <NavLink
               to="/"
               end
               onClick={handleLinkClick}
               className={({ isActive }) =>
-                `flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all duration-150 ${
+                `flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all duration-150 ${
                   isActive
                     ? 'bg-[#002970] text-white shadow-paytm'
                     : 'text-[#002970] hover:bg-[#f0f7fe] hover:text-[#00baf2]'
                 }`
               }
             >
-              <span>📊</span>
+              <span className="text-sm">📊</span>
               <span>Executive Overview</span>
             </NavLink>
           </div>
 
-          {/* Collapsible Dropdown Sections */}
+          {/* Collapsible Dropdown Sections (Collapsed at start by default) */}
           {sections.map((s) => {
             const isOpen = !!openSections[s.id]
             const hasActiveItem = s.items.some((it) => it.to === location.pathname)
@@ -156,13 +163,13 @@ export default function Sidebar({ isOpen = false, onClose = () => {} }) {
                 {/* Dropdown Section Header */}
                 <button
                   onClick={() => toggleSection(s.id)}
-                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left transition-all duration-150 ${
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left transition-all duration-150 ${
                     hasActiveItem && !isOpen
-                      ? 'bg-[#e8f5fe] text-[#002970]'
+                      ? 'bg-[#e8f5fe] text-[#002970] font-black border border-[#bce0fd]'
                       : 'text-slate-700 hover:bg-[#f5f9fe]'
                   }`}
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2.5">
                     <span className="text-xs">{s.icon}</span>
                     <span className="text-[11px] font-black tracking-wider text-[#002970] uppercase">
                       {s.title}
