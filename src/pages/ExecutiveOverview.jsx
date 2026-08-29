@@ -1,20 +1,18 @@
 import { executive } from '../data/executive.js'
 import { KpiCard, Card, StatusBadge, PageHeader } from '../components/ui.jsx'
+import { PaytmLogo } from '../components/PaytmLogo.jsx'
 
 function RadialGauge({ value = 68, label = 'Overall Posture Score' }) {
-  // SVG Radial Gauge
   const radius = 70
   const stroke = 12
   const normalizedRadius = radius - stroke * 2
   const circumference = normalizedRadius * 2 * Math.PI
-  // Semi-circle gauge (180 deg)
   const strokeDashoffset = circumference - (value / 100) * (circumference / 2)
 
   return (
     <div className="flex flex-col items-center justify-center p-2">
       <div className="relative flex items-center justify-center">
         <svg height={radius * 2} width={radius * 2} className="rotate-[180deg]">
-          {/* Background track */}
           <circle
             stroke="#e2edf8"
             fill="transparent"
@@ -24,7 +22,6 @@ function RadialGauge({ value = 68, label = 'Overall Posture Score' }) {
             cx={radius}
             cy={radius}
           />
-          {/* Active progress */}
           <circle
             stroke="#00baf2"
             fill="transparent"
@@ -111,11 +108,45 @@ export default function ExecutiveOverview() {
   const e = executive
   return (
     <div className="space-y-6">
-      <PageHeader
-        title={`${e.organization} — ${e.title}`}
-        subtitle={`Assessment Snapshot: ${e.snapshot} · ${e.confidential}`}
-        badge={`Consolidated: ${e.periods.consolidated}`}
-      />
+      {/* Paytm Hero Feature Banner */}
+      <div className="bg-gradient-to-r from-[#eaf5fe] via-[#f1f7fe] to-[#ffffff] border border-[#cbe3fd] rounded-2xl p-6 shadow-paytm flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            <PaytmLogo size="sm" />
+            <span className="text-[10px] font-extrabold uppercase tracking-wider bg-[#002970] text-white px-2.5 py-0.5 rounded-full">
+              Audit Snapshot
+            </span>
+          </div>
+          <h1 className="text-xl lg:text-2xl font-black text-[#002970] tracking-tight">
+            Security Posture &amp; Compliance Command
+          </h1>
+          <p className="text-xs text-slate-600 font-medium mt-1 max-w-2xl leading-relaxed">
+            Consolidated enterprise assessment across 15 AWS production accounts, Google Workspace IAM, and 44 Identity Governance (IGA) controls.
+          </p>
+          <div className="flex flex-wrap items-center gap-2 mt-4">
+            <span className="badge bg-white text-[#002970] border border-[#bce0fd] font-bold text-[11px] shadow-xs">
+              15 Production Accounts
+            </span>
+            <span className="badge bg-white text-[#002970] border border-[#bce0fd] font-bold text-[11px] shadow-xs">
+              77 Total Findings
+            </span>
+            <span className="badge bg-white text-[#002970] border border-[#bce0fd] font-bold text-[11px] shadow-xs">
+              68% IGA Posture
+            </span>
+          </div>
+        </div>
+        <div className="flex flex-col sm:flex-row md:flex-col gap-2.5 shrink-0">
+          <button className="paytm-btn text-xs">
+            Export Board PDF →
+          </button>
+          <a
+            href="#/framework-mapping"
+            className="paytm-btn-outline text-xs text-center"
+          >
+            Compliance Matrix
+          </a>
+        </div>
+      </div>
 
       {/* KPI Cards Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">

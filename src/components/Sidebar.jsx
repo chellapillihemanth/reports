@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { PaytmLogo } from './PaytmLogo.jsx'
 
 const sections = [
   {
@@ -52,16 +53,15 @@ const sections = [
 export default function Sidebar() {
   return (
     <aside className="w-64 shrink-0 bg-white border-r border-[#e1edf9] flex flex-col h-screen sticky top-0 z-30 select-none shadow-paytm">
-      {/* Paytm Brand Header */}
-      <div className="px-6 py-5 border-b border-[#e1edf9] bg-white flex items-center justify-between">
+      {/* Authentic Paytm Brand Header */}
+      <div className="px-5 py-5 border-b border-[#e1edf9] bg-white flex items-center justify-between">
         <div>
-          <div className="flex items-center gap-1.5">
-            <span className="text-[#002970] font-black text-lg tracking-tight leading-none">Paytm</span>
-            <span className="text-[#00baf2] font-black text-lg tracking-tight leading-none">money</span>
+          <PaytmLogo />
+          <div className="text-slate-400 text-[10px] font-extrabold mt-1 tracking-wider uppercase">
+            Security &amp; Posture
           </div>
-          <div className="text-slate-400 text-[11px] font-bold mt-1 uppercase tracking-wider">Security Posture</div>
         </div>
-        <span className="text-[10px] font-extrabold uppercase tracking-wider bg-[#e8f5fe] text-[#002970] px-2 py-0.5 rounded-full border border-[#bce0fd]">
+        <span className="text-[10px] font-black uppercase tracking-wider bg-[#e8f5fe] text-[#002970] px-2 py-0.5 rounded-full border border-[#bce0fd]">
           PROD
         </span>
       </div>
@@ -98,9 +98,9 @@ export default function Sidebar() {
 
       {/* Confidential Footer */}
       <div className="px-5 py-3.5 border-t border-[#e1edf9] bg-[#f5f9fe] flex items-center justify-between text-[11px] text-slate-500 font-semibold">
-        <span className="flex items-center gap-1.5">
+        <span className="flex items-center gap-1.5 text-[10px] font-bold text-[#002970]">
           <span className="w-2 h-2 rounded-full bg-[#00ba88]"></span>
-          <span>Confidential</span>
+          <span>Confidential Audit</span>
         </span>
         <span className="font-mono text-[10px] text-[#002970] font-bold">Apr–Jul 2026</span>
       </div>
