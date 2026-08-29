@@ -106,14 +106,14 @@ export default function Sidebar({ isOpen = false, onClose = () => {} }) {
         />
       )}
 
-      {/* Responsive Sidebar Container */}
+      {/* Permanently Fixed Sidebar (Never scrolls with main page content) */}
       <aside
-        className={`fixed lg:sticky top-0 left-0 z-50 w-72 lg:w-64 shrink-0 bg-white border-r border-[#e1edf9] flex flex-col h-screen select-none shadow-paytm transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 bottom-0 left-0 z-50 w-72 lg:w-64 bg-white border-r border-[#e1edf9] flex flex-col h-full select-none shadow-paytm transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
-        {/* Brand Header with RES-Q-RITY Logo */}
-        <div className="px-5 py-4 border-b border-[#e1edf9] bg-white flex items-center justify-between">
+        {/* Pinned Brand Header with RES-Q-RITY Logo */}
+        <div className="px-5 py-4 border-b border-[#e1edf9] bg-white flex items-center justify-between shrink-0">
           <div className="flex-1">
             <ResqrityLogo size="md" />
           </div>
@@ -132,7 +132,7 @@ export default function Sidebar({ isOpen = false, onClose = () => {} }) {
           </div>
         </div>
 
-        {/* Navigation Links with Collapsible Dropdown Sections */}
+        {/* Independent Scrollable Navigation Area */}
         <nav className="flex-1 overflow-y-auto px-3.5 py-4 space-y-2">
           {/* Standalone Executive Overview Link */}
           <div className="mb-3">
@@ -153,7 +153,7 @@ export default function Sidebar({ isOpen = false, onClose = () => {} }) {
             </NavLink>
           </div>
 
-          {/* Collapsible Dropdown Sections (Collapsed at start by default) */}
+          {/* Collapsible Dropdown Sections */}
           {sections.map((s) => {
             const isOpen = !!openSections[s.id]
             const hasActiveItem = s.items.some((it) => it.to === location.pathname)
@@ -219,8 +219,8 @@ export default function Sidebar({ isOpen = false, onClose = () => {} }) {
           })}
         </nav>
 
-        {/* Confidential Footer */}
-        <div className="px-5 py-3.5 border-t border-[#e1edf9] bg-[#f5f9fe] flex items-center justify-between text-[11px] text-slate-500 font-semibold">
+        {/* Pinned Confidential Footer */}
+        <div className="px-5 py-3.5 border-t border-[#e1edf9] bg-[#f5f9fe] flex items-center justify-between text-[11px] text-slate-500 font-semibold shrink-0">
           <span className="flex items-center gap-1.5 text-[10px] font-bold text-[#002970]">
             <span className="w-2 h-2 rounded-full bg-[#00ba88]"></span>
             <span>Security Assurance</span>

@@ -25,7 +25,7 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen bg-[#f5f9fe] text-slate-900 font-sans antialiased overflow-x-hidden">
+    <div className="min-h-screen bg-[#f5f9fe] text-slate-900 font-sans antialiased">
       {/* Mobile Top Header (Visible on screens < lg) */}
       <header className="lg:hidden sticky top-0 z-30 bg-white border-b border-[#e1edf9] px-4 py-3 flex items-center justify-between shadow-xs">
         <div className="flex items-center gap-3">
@@ -45,35 +45,37 @@ export default function App() {
         </span>
       </header>
 
-      {/* Sidebar (Desktop Sticky + Mobile Drawer) */}
+      {/* Permanently Fixed Sidebar on Desktop + Mobile Drawer */}
       <Sidebar
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
       />
 
-      {/* Main Content Area (Fully responsive device-fit container) */}
-      <main className="flex-1 min-w-0 w-full px-3.5 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8 max-w-7xl mx-auto overflow-x-hidden">
-        <Routes>
-          <Route path="/" element={<ExecutiveOverview />} />
-          <Route path="/aws" element={<AwsSecurity />} />
-          <Route path="/aws-accounts" element={<AwsAccounts />} />
-          <Route path="/aws-findings" element={<AwsFindings />} />
-          <Route path="/gws" element={<GoogleWorkspace />} />
-          <Route path="/enterprise-risk" element={<EnterpriseRisk />} />
-          <Route path="/iga" element={<IgaOverview />} />
-          <Route path="/iga-domains" element={<IgaDomains />} />
-          <Route path="/iga-pam" element={<IgaPam />} />
-          <Route path="/iga-sod" element={<IgaSod />} />
-          <Route path="/iga-access-reviews" element={<IgaAccessReviews />} />
-          <Route path="/control-status" element={<ControlStatus />} />
-          <Route path="/framework-mapping" element={<FrameworkMapping />} />
-          <Route path="/priority-actions" element={<PriorityActions />} />
-          <Route path="/action-plan" element={<ActionPlan />} />
-          <Route path="/roadmap" element={<Roadmap />} />
-          <Route path="/evidence" element={<Evidence />} />
-          <Route path="/source-reports" element={<SourceReports />} />
-        </Routes>
-      </main>
+      {/* Main Content Area: Offset by lg:pl-64 to accommodate fixed sidebar */}
+      <div className="lg:pl-64 flex flex-col min-h-screen">
+        <main className="flex-1 w-full px-3.5 py-5 sm:px-6 sm:py-7 lg:px-8 lg:py-8 max-w-7xl mx-auto overflow-x-hidden">
+          <Routes>
+            <Route path="/" element={<ExecutiveOverview />} />
+            <Route path="/aws" element={<AwsSecurity />} />
+            <Route path="/aws-accounts" element={<AwsAccounts />} />
+            <Route path="/aws-findings" element={<AwsFindings />} />
+            <Route path="/gws" element={<GoogleWorkspace />} />
+            <Route path="/enterprise-risk" element={<EnterpriseRisk />} />
+            <Route path="/iga" element={<IgaOverview />} />
+            <Route path="/iga-domains" element={<IgaDomains />} />
+            <Route path="/iga-pam" element={<IgaPam />} />
+            <Route path="/iga-sod" element={<IgaSod />} />
+            <Route path="/iga-access-reviews" element={<IgaAccessReviews />} />
+            <Route path="/control-status" element={<ControlStatus />} />
+            <Route path="/framework-mapping" element={<FrameworkMapping />} />
+            <Route path="/priority-actions" element={<PriorityActions />} />
+            <Route path="/action-plan" element={<ActionPlan />} />
+            <Route path="/roadmap" element={<Roadmap />} />
+            <Route path="/evidence" element={<Evidence />} />
+            <Route path="/source-reports" element={<SourceReports />} />
+          </Routes>
+        </main>
+      </div>
     </div>
   )
 }
