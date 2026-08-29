@@ -1,6 +1,7 @@
 import { executive } from '../data/executive.js'
 import { KpiCard, Card, StatusBadge, PageHeader } from '../components/ui.jsx'
 import { PaytmLogo } from '../components/PaytmLogo.jsx'
+import { riskRegister } from '../data/risk.js'
 
 function RadialGauge({ value = 68, label = 'Overall Posture Score' }) {
   const radius = 70
@@ -46,51 +47,83 @@ function RadialGauge({ value = 68, label = 'Overall Posture Score' }) {
 }
 
 function HeatMap() {
-  const impacts = ['High', 'Medium', 'Low']
-  const likelihoods = ['Low', 'Medium', 'High']
-  
-  const map = {
-    'High': { 'High': ['AWS-H', 'F1'], 'Medium': [], 'Low': [] },
-    'Medium': { 'High': [], 'Medium': ['AWS-M', 'F2'], 'Low': [] },
-    'Low': { 'High': [], 'Medium': [], 'Low': [] },
+  const impacts = [
+    { level: 5, label: '5 · Crit' },
+    { level: 4, label: '4 · Major' },
+    { level: 3, label: '3 · Mod' },
+    { level: 2, label: '2 · Minor' },
+    { level: 1, label: '1 · Neg' },
+  ]
+  const likelihoods = [
+    { level: 1, label: '1' },
+    { level: 2, label: '2' },
+    { level: 3, label: '3' },
+    { level: 4, label: '4' },
+    { level: 5, label: '5' },
+  ]
+
+  const getCellBg = (imp, lik) => {
+    const score = imp * lik
+    if (score >= 15) return 'bg-rose-50 border-rose-200'
+    if (score >= 10) return 'bg-orange-50 border-orange-200'
+    if (score >= 6) return 'bg-amber-50 border-amber-200'
+    return 'bg-emerald-50/70 border-emerald-200'
   }
 
   return (
     <div className="overflow-x-auto">
-      <table className="border-collapse w-full text-xs">
+      <table className="w-full border-separate border-spacing-1 text-xs">
         <thead>
           <tr>
-            <th className="p-2"></th>
+            <th className="text-[9px] font-black uppercase text-slate-400 p-0.5 text-right w-16">
+              Impact ↓
+            </th>
             {likelihoods.map((l) => (
-              <th key={l} className="p-2 text-center text-[#002970] font-extrabold uppercase text-[10px] tracking-wider">{l}</th>
+              <th
+                key={l.level}
+                className="text-center font-extrabold text-[#002970] p-1 bg-[#f0f7fe] rounded-md text-[10px] uppercase border border-[#d2e7fd]"
+              >
+                Lik {l.label}
+              </th>
             ))}
           </tr>
         </thead>
         <tbody>
           {impacts.map((imp) => (
-            <tr key={imp}>
-              <th className="p-2 text-right text-[#002970] font-extrabold uppercase pr-3 text-[10px] tracking-wider">{imp}</th>
+            <tr key={imp.level}>
+              <th className="text-right font-extrabold text-[#002970] pr-1.5 text-[9px] uppercase bg-[#f0f7fe] rounded-md border border-[#d2e7fd] whitespace-nowrap p-1">
+                {imp.label}
+              </th>
               {likelihoods.map((lik) => {
-                const ids = map[imp][lik]
-                const tone = imp === 'High' ? 'high' : imp === 'Medium' ? 'medium' : 'low'
+                const matchingRisks = riskRegister.filter(
+                  (r) => r.impact === imp.level && r.likelihood === lik.level
+                )
+                const cellBg = getCellBg(imp.level, lik.level)
+
                 return (
-                  <td key={lik} className="p-1.5 border border-[#e1edf9] w-28 h-20 align-middle bg-[#f8fbfe] rounded-lg">
-                    {ids.length ? (
-                      ids.map((id) => (
-                        <div
-                          key={id}
-                          className={`text-center rounded-lg px-2 py-1 mb-1 font-black text-xs shadow-xs ${
-                            tone === 'high'
-                              ? 'bg-rose-50 text-rose-700 border border-rose-200'
-                              : 'bg-amber-50 text-amber-900 border border-amber-300'
+                  <td
+                    key={lik.level}
+                    className={`h-11 rounded-lg border p-1 align-top transition-colors ${cellBg}`}
+                  >
+                    <div className="flex flex-wrap gap-1 items-start justify-center">
+                      {matchingRisks.map((r) => (
+                        <span
+                          key={r.id}
+                          title={`${r.id}: ${r.name}`}
+                          className={`px-1.5 py-0.5 rounded text-[9px] font-black shadow-2xs ${
+                            r.riskLevel === 'Critical'
+                              ? 'bg-rose-600 text-white'
+                              : r.riskLevel === 'High'
+                              ? 'bg-[#f58220] text-white'
+                              : r.riskLevel === 'Medium'
+                              ? 'bg-amber-100 text-amber-900 border border-amber-300'
+                              : 'bg-emerald-100 text-emerald-800 border border-emerald-300'
                           }`}
                         >
-                          {id}
-                        </div>
-                      ))
-                    ) : (
-                      <div className="text-center text-slate-300 font-bold">—</div>
-                    )}
+                          {r.id}
+                        </span>
+                      ))}
+                    </div>
                   </td>
                 )
               })}
@@ -98,8 +131,10 @@ function HeatMap() {
           ))}
         </tbody>
       </table>
-      <div className="flex justify-end text-[10px] font-black text-slate-400 mr-2 mt-2 tracking-wider">LIKELIHOOD →</div>
-      <div className="text-[10px] font-black text-slate-400 ml-8 -mt-4 tracking-wider">↑ IMPACT</div>
+      <div className="flex items-center justify-between text-[10px] font-bold text-slate-400 mt-2 px-1">
+        <span className="text-[9px] text-slate-500">10 Core Evaluated Risks (R01–R10)</span>
+        <span className="text-[9px] font-black text-[#002970]">LIKELIHOOD (1–5) →</span>
+      </div>
     </div>
   )
 }
