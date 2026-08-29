@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { PaytmLogo } from './PaytmLogo.jsx'
+import { ResqrityLogo } from './PaytmLogo.jsx'
 
 const sections = [
   {
@@ -56,7 +56,7 @@ export default function Sidebar() {
       {/* Brand Header with RES-Q-RITY Logo */}
       <div className="px-5 py-4 border-b border-[#e1edf9] bg-white flex items-center justify-between">
         <div className="flex-1">
-          <PaytmLogo size="md" />
+          <ResqrityLogo size="md" />
         </div>
         <span className="text-[10px] font-black uppercase tracking-wider bg-[#e8f7fd] text-[#008db8] px-2 py-0.5 rounded-full border border-[#bcecfd] shrink-0">
           PROD
